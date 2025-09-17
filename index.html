@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saurabh Sharma | Full Stack Developer</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .click-effect {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            animation: clickAnimation 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(35, 101, 207, 0.8);
+        }
+
+        @keyframes clickAnimation {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0);
+            }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .wave-animation {
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #6EE7B7 0%, #3B82F6 50%, #9333EA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .luxury-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .card-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="luxury-bg text-white min-h-screen">
+    <div id="vanta-bg" class="fixed top-0 left-0 w-full h-full z-0 wave-animation"></div>
+
+    <!-- Click effect container -->
+    <div id="click-effects"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black bg-opacity-30">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">Saurabh's Portfolio</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-blue-300 transition-all duration-300">Home</a>
+                <a href="#about" class="hover:text-blue-300 transition-all duration-300">About</a>
+                <a href="#skills" class="hover:text-blue-300 transition-all duration-300">Skills</a>
+                <a href="#projects" class="hover:text-blue-300 transition-all duration-300">Projects</a>
+                <a href="#contact" class="hover:text-blue-300 transition-all duration-300">Contact</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="menu-btn">
+                <i data-feather="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-90 w-full absolute top-16 left-0 py-4 px-6">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="hover:text-cyan-400 transition-all duration-300">Home</a>
+                <a href="#about" class="hover:text-cyan-400 transition-all duration-300">About</a>
+                <a href="#skills" class="hover:text-cyan-400 transition-all duration-300">Skills</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-all duration-300">Projects</a>
+                <a href="#contact" class="hover:text-cyan-400 transition-all duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center relative z-10 pt-20 overflow-hidden">
+        <!-- Floating particles background -->
+        <div id="particles-js" class="absolute top-0 left-0 w-full h-full z-0"></div>
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <h1 class="text-5xl md:text-5xl font-bold mb-1 leading-tight">
+                        <span class="gradient-text">Hi, I'm</span>
+                        <span class="gradient-text" colour="#0f3460 100">Saurabh Sharma</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-8 text-blue-300">Full Stack Developer</h2>
+                    <p class="text-lg text-gray-300 mb-6 max-w-lg">
+                        This portfolio reflects my journey as a developer, showcasing projects that combine technical
+                        expertise, creativity, and a focus on delivering meaningful digital experiences.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#projects"
+                            class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-105">
+                            View Work
+                        </a>
+                        <a href="#contact"
+                            class="px-8 py-3 border border-blue-400 rounded-full font-semibold hover:bg-blue-400 hover:text-gray-900 transition-all duration-300 transform hover:scale-105">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-16 md:mt-0" data-aos="fade-left">
+                    <div class="relative">
+                        <div
+                            class="w-64 h-64 md:w-80 md:h-80 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center overflow-hidden shadow-2xl float-animation">
+                            <img src="Saurabhbg.png.png" alt="Saurabh Sharma" class="w-full h-full object-cover">
+                        </div>
+                        <div
+                            class="absolute -bottom-5 -right-5 md:-right-10 bg-gray-900 p-4 rounded-lg shadow-lg card-glass">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-green-400 mr-2 animate-pulse"></div>
+                                <span class="text-sm">Available for work</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-down">
+                <span class="gradient-text">About Me</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-9 md:mb-0" data-aos="fade-right">
+                    <img src="aboutme.jpg" alt="About Saurabh" class="rounded-xl shadow-2xl w-full max-w-lg mx-auto">
+                </div>
+                <div class="md:w-1/2 md:pl-12" data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold mb-6">Who am I?</h3>
+                    <p class="text-gray-300 mb-6">
+                        I'm Saurabh Sharma, a passionate Full Stack Developer with experience in creating
+                        web applications that are both beautiful and functional. My expertise spans across the entire
+                        development stack, from designing intuitive user interfaces to building robust backend systems.
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        My journey in web development began when I was 16, and since then I've been constantly learning
+                        and adapting to new technologies. I believe in writing clean, efficient code and creating
+                        seamless user experiences.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="flex items-center">
+                            <i data-feather="code" class="mr-3 text-blue-400"></i>
+                            <span>Web development</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-feather="layers" class="mr-3 text-purple-400"></i>
+                            <span>UI/UX Design</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-feather="database" class="mr-3 text-green-400"></i>
+                            <span>Database Architecture</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-feather="cloud" class="mr-3 text-yellow-400"></i>
+                            <span>Cloud Solutions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-down">
+                <span class="gradient-text">My Skills</span>
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Frontend Skills -->
+                <div class="card-glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-blue-900 bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                            <i data-feather="layout" class="text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Frontend</h3>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                            <li>React.js</li>
+                            <li>Tailwind CSS</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>TypeScript</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Backend Skills -->
+                <div class="card-glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-purple-900 bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                            <i data-feather="server" class="text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Backend</h3>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                            <li>Node.js</li>
+                            <li>Python</li>
+                            <li>React Native</li>
+                            <li>React.js</li>
+                            <li>REST APIs</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Database Skills -->
+                <div class="card-glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-green-900 bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                            <i data-feather="database" class="text-green-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Database</h3>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                            <li>MongoDB</li>
+                            <li>MySQL</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- DevOps Skills -->
+                <div class="card-glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-yellow-900 bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                            <i data-feather="cloud" class="text-yellow-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">DevOps</h3>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                            <li>Docker</li>
+                            <li>AWS</li>
+                            <li>Git</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+         <div style="text-align: center; margin-top: 40px;">
+  <a href="SaurabhCV.pdf" download id="downloadBtn" 
+     class="download-btn">
+    <span>Download Resume</span>
+    <span class="rocket">🚀</span>
+  </a>
+</div>
+
+<style>
+.download-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: linear-gradient(to right, #facc15, #d97706);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+}
+
+/* Glow on hover */
+.download-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.8), 
+              0 0 40px rgba(217, 119, 6, 0.6);
+}
+
+.rocket {
+  font-size: 22px;
+  display: inline-block;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.4, 1), opacity 0.3s;
+}
+
+/* Wiggle when hover */
+.download-btn:hover .rocket {
+  animation: wiggle 0.6s infinite alternate;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(-10deg); }
+  100% { transform: rotate(10deg); }
+}
+
+/* Launch animation */
+.launch .rocket {
+  animation: none; /* stop wiggle */
+  transform: translate(400px, -200px) rotate(45deg);
+  opacity: 0;
+}
+</style>
+
+<script>
+const button = document.getElementById("downloadBtn");
+
+button.addEventListener("click", () => {
+  button.classList.add("launch");
+  setTimeout(() => {
+    button.classList.remove("launch");
+  }, 2000);
+});
+</script>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-down">
+                <span class="gradient-text">Featured Projects</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card-glass rounded-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="spotify App clone.jpg" alt="Project 1"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end px-8">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Spotify Clone</h3>
+                                <p class="text-gray-300 text-sm">A Spotify-inspired music streaming app with a responsive ReactJS UI, integrated player controls, dynamic playlists, and scalable architecture.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-3 py-1 bg-blue-900 bg-opacity-30 text-blue-300 rounded-full text-xs">ReactJs</span>
+                            <span
+                                class="px-3 py-1 bg-purple-900 bg-opacity-30 text-purple-300 rounded-full text-xs">JavaScript</span>
+                            <span
+                                class="px-3 py-1 bg-green-900 bg-opacity-30 text-green-300 rounded-full text-xs">CSS</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            <span>View Project</span>
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="card-glass rounded-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="E commerce Website.png.jpg" alt="Project 2"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">ANON E-Commerce App</h3>
+                                <p class="text-gray-300 text-sm">A modern e-commerce platform with user authentication, product management, and a seamless shopping experience using Vue.js and Firebase.
+                                   </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-3 py-1 bg-blue-900 bg-opacity-30 text-blue-300 rounded-full text-xs">Vue.js</span>
+                            <span
+                                class="px-3 py-1 bg-purple-900 bg-opacity-30 text-purple-300 rounded-full text-xs">Firebase</span>
+                            <span
+                                class="px-3 py-1 bg-yellow-900 bg-opacity-30 text-yellow-300 rounded-full text-xs">Tailwind</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            <span>View Project</span>
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="card-glass rounded-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="ai content generator.png" alt="Project 3"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">AI Content Generator</h3>
+                                <p class="text-gray-300 text-sm">Platform that generates content using machine learning.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-3 py-1 bg-blue-900 bg-opacity-30 text-blue-300 rounded-full text-xs">HTML</span>
+                            <span
+                                class="px-3 py-1 bg-purple-900 bg-opacity-30 text-purple-300 rounded-full text-xs">Tailwind</span>
+                            <span
+                                class="px-3 py-1 bg-green-900 bg-opacity-30 text-green-300 rounded-full text-xs">Vanta.js</span>
+                                 <span
+                                class="px-3 py-1 bg-yellow-900 bg-opacity-30 text-yellow-300 rounded-full text-xs">JavaScript</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            <span>View Project</span>
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12" data-aos="fade-up">
+                <a href="#"
+                    class="px-8 py-3 border border-blue-400 rounded-full font-semibold hover:bg-blue-400 hover:text-gray-900 transition-all duration-300 inline-flex items-center">
+                    View All Projects
+                    <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center" data-aos="fade-down">
+                <span class="gradient-text">Get In Touch</span>
+            </h2>
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-6">Let's work together!</h3>
+                    <p class="text-gray-300 mb-8 max-w-md">
+                        Whether you have a project in mind or just want to chat about technology, feel free to reach
+                        out. I'm always open to discussing new opportunities, ideas, or challenges.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i data-feather="mail" class="mr-4 text-blue-400"></i>
+                            <span>saurabh4@gmail.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-feather="phone" class="mr-4 text-purple-400"></i>
+                            <span>+91 7982306568</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-feather="map-pin" class="mr-4 text-green-400"></i>
+                            <span>Dehradun Uttrakhand</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-8">
+                        <a href="https://github.com/Sxaurabh07"
+                            class="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors duration-300">
+                            <i data-feather="github"></i>
+                        </a>
+                      
+                        <a href="https://www.linkedin.com/in/sxaurabh?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                            class="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center transition-colors duration-300">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/sxaurabh/"
+                            class="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-500 flex items-center justify-center transition-colors duration-300">
+                            <i data-feather="instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <form class="card-glass p-8 rounded-xl">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name"
+                                class="w-full bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email"
+                                class="w-full bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="subject"
+                                class="w-full bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-300 mb-2">Message</label>
+                            <textarea id="message" rows="4"
+                                class="w-full bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-[1.02]">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 relative z-10 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold gradient-text">SAURABH SHARMA</a>
+                    <p class="text-gray-400 mt-2">Full Stack Developer & Web Architect</p>
+                </div>
+                <div class="flex flex-wrap justify-center space-x-6">
+                    <a href="#home" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a>
+                    <a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">About</a>
+                    <a href="#skills" class="text-gray-400 hover:text-white transition-colors duration-300">Skills</a>
+                    <a href="#projects"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">Projects</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 Saurabh Sharma. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true,
+            easing: 'ease-in-out-quad'
+        });
+
+        // Scroll-triggered animations
+        window.addEventListener('scroll', function () {
+            const scrollPosition = window.scrollY;
+            const heroContent = document.querySelector('#home > div > div');
+
+            // Parallax effect for hero content
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+            }
+
+            // Animate navbar on scroll
+            const navbar = document.querySelector('nav');
+            if (scrollPosition > 100) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.add('bg-opacity-90');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.remove('bg-opacity-90');
+            }
+        });
+
+        // Initialize Vanta.js background
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3b82f6,
+            backgroundColor: 0x0f172a,
+            size: 0.8
+        });
+
+        // Enhanced click animation effect with multiple ripples
+        document.addEventListener('click', function (e) {
+            // Create 3 concentric ripple effects
+            for (let i = 0; i < 3; i++) {
+                const clickEffect = document.createElement('div');
+                clickEffect.className = 'click-effect';
+                clickEffect.style.left = e.clientX + 'px';
+                clickEffect.style.top = e.clientY + 'px';
+
+                // Random color variation with higher saturation
+                const colors = ['#3B82F6', '#9333EA', '#10B981', '#F59E0B', '#EC4899'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                clickEffect.style.background = `rgba(${parseInt(randomColor.slice(1, 3), 16)}, ${parseInt(randomColor.slice(3, 5), 16)}, ${parseInt(randomColor.slice(5, 7), 16)}, 0.7)`;
+                clickEffect.style.boxShadow = `0 0 20px ${randomColor}`;
+                clickEffect.style.animationDelay = `${i * 0.15}s`;
+                clickEffect.style.transform = `translate(-50%, -50%) scale(${1 + i * 0.3})`;
+
+                document.getElementById('click-effects').appendChild(clickEffect);
+
+                // Remove after animation completes
+                setTimeout(() => {
+                    clickEffect.remove();
+                }, 800 + (i * 150));
+            }
+
+            // Create floating text effect on click
+            if (Math.random() > 0.7) { // 30% chance to show floating text
+                const clickText = document.createElement('div');
+                clickText.className = 'absolute pointer-events-none text-white font-bold';
+                clickText.style.left = e.clientX + 'px';
+                clickText.style.top = e.clientY + 'px';
+                clickText.style.transform = 'translate(-50%, -50%)';
+                clickText.style.opacity = '1';
+                clickText.textContent = ['Click!', 'Boom!', 'Nice!', 'Wow!', 'Cool!'][Math.floor(Math.random() * 5)];
+
+                document.body.appendChild(clickText);
+
+                anime({
+                    targets: clickText,
+                    translateY: -100,
+                    opacity: 0,
+                    duration: 1200,
+                    easing: 'easeOutExpo',
+                    complete: () => clickText.remove()
+                });
+            }
+        });
+
+        // Smooth transition for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    anime({
+                        targets: 'html, body',
+                        scrollTop: targetElement.offsetTop - 80,
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+            });
+        });
+
+        // Hover animations for cards
+        document.querySelectorAll('.card-glass').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                anime({
+                    targets: this,
+                    scale: 1.02,
+                    boxShadow: '0 25px 50px -12px rgba(59, 130, 246, 0.25)',
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+            card.addEventListener('mouseleave', function () {
+                anime({
+                    targets: this,
+                    scale: 1,
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+        });
+
+        // Text wave animation on hero text
+        const heroText = document.querySelector('#home h1');
+        if (heroText) {
+            const text = heroText.textContent;
+            heroText.innerHTML = '';
+
+            text.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.display = 'inline-block';
+                span.style.transformOrigin = 'bottom center';
+
+                // Add animation delay based on character position
+                span.style.animation = `wave 2s ease-in-out infinite ${i * 0.05}s`;
+
+                heroText.appendChild(span);
+            });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            feather.replace();
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function () {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#3B82F6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#3B82F6", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // Feather icons
+        feather.replace();
+    </script>
+</body>
+
+</html>
